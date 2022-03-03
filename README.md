@@ -1,0 +1,1 @@
+A simple ext manager for discord-py-interactions

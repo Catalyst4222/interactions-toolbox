@@ -6,7 +6,17 @@ from .installer import ExtData, get_ext
 
 
 class Tools:
+    """
+
+    :ivar Client client: The Client the tools belong to
+    :ivar Dict[str, ExtData] extensions: A dict containing name-ext pairs in use
+    :ivar Dict[str, ...] tools: A dict containing name-tool pairs available
+    """
     def __init__(self, client: Client):
+        """
+        :param client: the client that will be using the tools
+        :type client: Client
+        """
         self.client = client
 
         self.extensions: Dict[str, ExtData] = {}
@@ -21,7 +31,16 @@ class Tools:
             raise
 
     def add(self, item: str, ext: str):
-        """Add a new item to your toolbox"""
+        """
+        Add a new item to your toolbox
+
+        :param item: The name of the item
+        :type item: str
+        :param ext: The extension to get it from
+        :type ext: str
+        :return: The item
+        :rtype: Any
+        """
         if item in self.tools:
             raise ValueError(f"{item} is already loaded as a tool!")
 
@@ -35,7 +54,14 @@ class Tools:
         return service
 
     def _get_ext(self, ext: str) -> ExtData:
-        """Get an ext, and load it if not found"""
+        """
+        Get an ext, and load it if not found
+
+        :param ext: The name of the ext
+        :type ext: str
+        :return: The ExtData of the ext
+        :rtype: ExtData
+        """
         if ext not in self.extensions:
             ext_ = self.extensions[ext] = get_ext(ext)
             if hasattr(ext_.ext, "setup"):
